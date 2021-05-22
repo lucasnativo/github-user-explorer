@@ -14,7 +14,6 @@ function Login({ main }) {
 
   async function login(username) {
     setIsLoading(true);
-    console.log(username);
 
     const response = await fetchAllUserData(username);
 
