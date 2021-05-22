@@ -7,17 +7,31 @@ function Login({ main }) {
   const { data, setData } = useContext(DataContext);
   const [isLoading, setIsLoading] = useState(false);
   const [username, setUsername] = useState("aniltonveiga");
+  const [error, setError] = useState(null);
 
   if (data) {
     return <Redirect to="/home"></Redirect>;
   }
 
   async function login(username) {
+    if (username === "") {
+      return setError("Campo Obrigatório");
+    }
+
+    setError(null);
     setIsLoading(true);
 
-    const response = await fetchAllUserData(username);
-
-    setData(response);
+    try {
+      const response = await fetchAllUserData(username);
+      setData(response);
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        setError("Usuário não encontrado");
+      } else {
+        setError("Error em comunicar com o GitHub");
+      }
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -29,6 +43,7 @@ function Login({ main }) {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         ></input>
+        {error && <div>{error}</div>}
       </label>
       <button onClick={() => login(username)} disabled={isLoading}>
         {isLoading ? "Carregando" : "Entrar"}
