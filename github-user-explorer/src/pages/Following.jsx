@@ -5,11 +5,17 @@ import { DataContext } from "../context/DataContext";
 import fetchUserData from "../utils/fetchUserData";
 import fetchAllUserData from "../utils/fetchAllUserData";
 import Profile from "../components/Profile";
+import styled from "styled-components";
 
 // let a = {
 //   login: "brunomb",
 //   avatar_url: "https://avatars.githubusercontent.com/u/5151786?v=4",
 // };
+
+const Avatar = styled.img`
+  width: 64px;
+  border-radius: 50%;
+`;
 
 function Following() {
   const { data, setData } = useContext(DataContext);
@@ -25,14 +31,12 @@ function Following() {
     setSelectedUser(user);
   }
 
-  let Voltar = (
-    <Link to="/home">
-      <button>Voltar</button>
-    </Link>
-  );
-
-  if (selectedUser) {
-    Voltar = <button onClick={() => setSelectedUser(null)}>Voltar</button>;
+  function goBack() {
+    if (selectedUser) {
+      setSelectedUser(null);
+    } else {
+      history.push("/home");
+    }
   }
 
   let Entrar = (
@@ -43,31 +47,55 @@ function Following() {
     const user = await fetchAllUserData(login);
     setData(user);
     history.push("/home");
-    console.log(user);
   }
 
   return (
     <>
-      <div>
-        {Voltar}
-        {selectedUser && Entrar}
-      </div>
+      <TopBar
+        title={`${data.following.length} Seguindo`}
+        onBackClick={goBack}
+        onSaveClick={selectedUser ? () => switchUser(selectedUser.login) : null}
+      />
       {selectedUser ? (
         <Profile user={selectedUser} />
       ) : (
-        <ul>
-          {data.following.map((user) => (
-            <li key={user.login} onClick={() => viewUser(user.login)}>
-              {user.login}
-              <div>
-                <img src={user.avatar_url} alt={`avatar de ${user.login}`} />
-              </div>
-            </li>
-          ))}
-        </ul>
+        <ProfileList users={data.following} onClick={viewUser} />
       )}
       <NavBar />
     </>
+  );
+}
+
+function ProfileList({ users, onClick }) {
+  return (
+    <ul>
+      {users.map((user) => (
+        <ProfileListItem key={user.login} user={user} onClick={onClick} />
+      ))}
+    </ul>
+  );
+}
+
+const ListItem = styled.li``;
+
+function ProfileListItem({ user, onClick }) {
+  return (
+    <ListItem onClick={() => onClick(user.login)}>
+      {user.login}
+      <div>
+        <Avatar src={user.avatar_url} alt={`avatar de ${user.login}`} />
+      </div>
+    </ListItem>
+  );
+}
+
+function TopBar({ title, onBackClick, onSaveClick }) {
+  return (
+    <div>
+      <button onClick={onBackClick}>Voltar</button>
+      <h1>{title}</h1>
+      {onSaveClick && <button onClick={onSaveClick}>Salvar</button>}
+    </div>
   );
 }
 
