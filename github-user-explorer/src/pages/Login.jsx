@@ -2,11 +2,12 @@ import { Redirect } from "react-router-dom";
 import { useContext, useState } from "react";
 import { DataContext } from "../context/DataContext";
 import fetchAllUserData from "../utils/fetchAllUserData";
+import "../App.css";
 
 function Login({ main }) {
   const { data, setData } = useContext(DataContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [username, setUsername] = useState("aniltonveiga");
+  const [username, setUsername] = useState("");
   const [error, setError] = useState(null);
 
   if (data) {
@@ -36,15 +37,13 @@ function Login({ main }) {
 
   return (
     <>
-      <label>
-        User:
-        <input
-          disabled={isLoading}
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        ></input>
-        {error && <div>{error}</div>}
-      </label>
+      <input
+        placeholder="Usuário"
+        disabled={isLoading}
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      ></input>
+      {error && <div>{error}</div>}
       <button onClick={() => login(username)} disabled={isLoading}>
         {isLoading ? "Carregando" : "Entrar"}
       </button>

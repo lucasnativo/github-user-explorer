@@ -1,15 +1,12 @@
 import NavBar from "../components/NavBar";
+import TopBar from "../components/TopBar";
+import ProfileList from "../components/ProfileList";
 import { useContext, useState } from "react";
-import { Redirect, Link, useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { DataContext } from "../context/DataContext";
 import fetchUserData from "../utils/fetchUserData";
 import fetchAllUserData from "../utils/fetchAllUserData";
 import Profile from "../components/Profile";
-
-// let a = {
-//   login: "brunomb",
-//   avatar_url: "https://avatars.githubusercontent.com/u/5151786?v=4",
-// };
 
 function Followers() {
   const { data, setData } = useContext(DataContext);
@@ -25,19 +22,13 @@ function Followers() {
     setSelectedUser(user);
   }
 
-  let Voltar = (
-    <Link to="/home">
-      <button>Voltar</button>
-    </Link>
-  );
-
-  if (selectedUser) {
-    Voltar = <button onClick={() => setSelectedUser(null)}>Voltar</button>;
+  function goBack() {
+    if (selectedUser) {
+      setSelectedUser(null);
+    } else {
+      history.push("/home");
+    }
   }
-
-  let Entrar = (
-    <button onClick={() => switchUser(selectedUser.login)}>Entrar</button>
-  );
 
   async function switchUser(login) {
     const user = await fetchAllUserData(login);
@@ -47,20 +38,15 @@ function Followers() {
 
   return (
     <>
-      <div>
-        {Voltar}
-        {selectedUser && Entrar}
-      </div>
+      <TopBar
+        title={`${data.followers.length} Seguidores`}
+        onBackClick={goBack}
+        onSaveClick={selectedUser ? () => switchUser(selectedUser.login) : null}
+      />
       {selectedUser ? (
         <Profile user={selectedUser} />
       ) : (
-        <ul>
-          {data.followers.map((user) => (
-            <li key={user.login} onClick={() => viewUser(user.login)}>
-              {user.login}
-            </li>
-          ))}
-        </ul>
+        <ProfileList users={data.followers} onClick={viewUser} />
       )}
       <NavBar />
     </>

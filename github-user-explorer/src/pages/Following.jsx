@@ -1,21 +1,12 @@
 import NavBar from "../components/NavBar";
+import TopBar from "../components/TopBar";
+import ProfileList from "../components/ProfileList";
 import { useContext, useState } from "react";
-import { Redirect, Link, useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { DataContext } from "../context/DataContext";
 import fetchUserData from "../utils/fetchUserData";
 import fetchAllUserData from "../utils/fetchAllUserData";
 import Profile from "../components/Profile";
-import styled from "styled-components";
-
-// let a = {
-//   login: "brunomb",
-//   avatar_url: "https://avatars.githubusercontent.com/u/5151786?v=4",
-// };
-
-const Avatar = styled.img`
-  width: 64px;
-  border-radius: 50%;
-`;
 
 function Following() {
   const { data, setData } = useContext(DataContext);
@@ -39,10 +30,6 @@ function Following() {
     }
   }
 
-  let Entrar = (
-    <button onClick={() => switchUser(selectedUser.login)}>Entrar</button>
-  );
-
   async function switchUser(login) {
     const user = await fetchAllUserData(login);
     setData(user);
@@ -63,39 +50,6 @@ function Following() {
       )}
       <NavBar />
     </>
-  );
-}
-
-function ProfileList({ users, onClick }) {
-  return (
-    <ul>
-      {users.map((user) => (
-        <ProfileListItem key={user.login} user={user} onClick={onClick} />
-      ))}
-    </ul>
-  );
-}
-
-const ListItem = styled.li``;
-
-function ProfileListItem({ user, onClick }) {
-  return (
-    <ListItem onClick={() => onClick(user.login)}>
-      {user.login}
-      <div>
-        <Avatar src={user.avatar_url} alt={`avatar de ${user.login}`} />
-      </div>
-    </ListItem>
-  );
-}
-
-function TopBar({ title, onBackClick, onSaveClick }) {
-  return (
-    <div>
-      <button onClick={onBackClick}>Voltar</button>
-      <h1>{title}</h1>
-      {onSaveClick && <button onClick={onSaveClick}>Salvar</button>}
-    </div>
   );
 }
 
