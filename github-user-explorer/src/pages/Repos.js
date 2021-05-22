@@ -1,4 +1,4 @@
-import NavBar from "./NavBar"
+import NavBar from "../components/NavBar"
 import { useContext } from "react";
 import { Redirect } from "react-router";
 import { DataContext } from "../context/DataContext";
@@ -21,13 +21,17 @@ function Repos() {
   return (
     <>
       <ul>
-        {data.repos.map((repo) => (
-          <li>{repo.name}</li>
-        ))}
+        { data.repos.map(repo => <Repo name={repo.name} />) }
       </ul>
       <NavBar />
     </>
   );
+}
+
+function Repo({name}) {
+  return (
+    <li>{name}</li>
+  )
 }
 
 export default Repos

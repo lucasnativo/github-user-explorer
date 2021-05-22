@@ -5,11 +5,11 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import Login from "./components/Login"
-import Home from "./components/Home"
-import Following from "./components/Following"
-import Followers from "./components/Followers"
-import Repos from "./components/Repos"
+import Login from "./pages/Login"
+import Home from "./pages/Home"
+import Following from "./pages/Following"
+import Followers from "./pages/Followers"
+import Repos from "./pages/Repos"
 import { DataProvider } from "./context/DataContext"
 
 export default function App() {

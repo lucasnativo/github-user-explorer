@@ -1,4 +1,4 @@
-import NavBar from "./NavBar";
+import NavBar from "../components/NavBar";
 import { DataContext } from "../context/DataContext";
 import { useContext } from "react";
 import { Redirect } from "react-router";
