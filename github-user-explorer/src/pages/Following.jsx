@@ -59,6 +59,9 @@ function Following() {
           {data.following.map((user) => (
             <li key={user.login} onClick={() => viewUser(user.login)}>
               {user.login}
+              <div>
+                <img src={user.avatar_url} alt={`avatar de ${user.login}`} />
+              </div>
             </li>
           ))}
         </ul>
