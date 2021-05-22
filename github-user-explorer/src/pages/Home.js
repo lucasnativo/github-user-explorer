@@ -2,6 +2,7 @@ import NavBar from "../components/NavBar";
 import { DataContext } from "../context/DataContext";
 import { useContext } from "react";
 import { Redirect } from "react-router";
+import Profile from "../components/Profile"
 
 // let a = {
 //   login: "lucasnativo",
@@ -26,17 +27,7 @@ function Home() {
 
   return (
     <>
-      <h2>
-        {data.user.login}
-      </h2>
-      <div>{data.user.name}</div>
-      <div>{data.user.location}</div>
-      <div>{data.user.email}</div>
-      <div>{data.user.bio}</div>
-      <div>{data.user.public_repos}</div>
-      <div>{data.user.followers}</div>
-      <div>{data.user.following}</div>
-      
+      <Profile user={data.user} />
       <button onClick={() => setData(null)}>Sair</button>
       <NavBar />
     </>

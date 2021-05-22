@@ -1,7 +1,9 @@
-import NavBar from "../components/NavBar"
-import { useContext } from "react";
-import { Redirect } from "react-router";
+import NavBar from "../components/NavBar";
+import { useContext, useState } from "react";
+import { Redirect, Link } from "react-router-dom";
 import { DataContext } from "../context/DataContext";
+import fetchUserData from "../utils/fetchUserData";
+import Profile from "../components/Profile";
 
 // let a = {
 //   login: "brunomb",
@@ -10,23 +12,48 @@ import { DataContext } from "../context/DataContext";
 
 function Following() {
   const { data, setData } = useContext(DataContext);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   if (!data) {
-    return (
-      <Redirect to="/"></Redirect>
-    )
+    return <Redirect to="/"></Redirect>;
   }
+
+  async function viewUser(login) {
+    const user = await fetchUserData(login);
+    setSelectedUser(user);
+  }
+
+  let Voltar = (
+    <Link to="/home">
+      <button>Voltar</button>
+    </Link>
+  );
+
+  // if (selectedUser) {
+  //   Voltar = (
+  //     <a href="/following" onClick={() => setSelectedUser(null)}>
+  //       Voltar
+  //     </a>
+  //   );
+  // }
 
   return (
     <>
-      <ul>
-        {data.following.map((user) => (
-          <li>{user.login}</li>
-        ))}
-      </ul>
+      <div>{Voltar}</div>
+      {selectedUser ? (
+        <Profile user={selectedUser} />
+      ) : (
+        <ul>
+          {data.following.map((user) => (
+            <li key={user.login} onClick={() => viewUser(user.login)}>
+              {user.login}
+            </li>
+          ))}
+        </ul>
+      )}
       <NavBar />
     </>
   );
 }
 
-export default Following
+export default Following;
