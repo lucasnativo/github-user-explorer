@@ -1,12 +1,29 @@
-import { Link } from "react-router-dom"
 import NavBar from "./NavBar"
+import { useContext } from "react";
+import { Redirect } from "react-router";
+import { DataContext } from "../context/DataContext";
+
+// let a = {
+//   login: "brunomb",
+//   avatar_url: "https://avatars.githubusercontent.com/u/5151786?v=4",
+// };
 
 function Following() {
+  const { data, setData } = useContext(DataContext);
+
+  if (!data) {
+    return (
+      <Redirect to="/"></Redirect>
+    )
+  }
+
   return (
     <>
-      <Link to="/home">
-        <button>Voltar</button>
-      </Link>
+      <ul>
+        {data.following.map((user) => (
+          <li>{user.login}</li>
+        ))}
+      </ul>
       <NavBar />
     </>
   );

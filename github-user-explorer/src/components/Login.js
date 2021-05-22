@@ -1,6 +1,7 @@
 import { Redirect } from "react-router-dom"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import axios from "axios"
+import { DataContext } from "../context/DataContext"
 
 async function fetchUserData(user) {
   const userUrl = `https://api.github.com/users/${user}` 
@@ -24,30 +25,31 @@ async function fetchUserData(user) {
 }
 
 function Login({main}) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const { data, setData } = useContext(DataContext)
   const [isLoading, setIsLoading] = useState(false)
+  const [username, setUsername] = useState("")
 
-  if (isLoggedIn) {
+  if (data) {
     return (
       <Redirect to="/home"></Redirect>
     )
   }
 
-  async function login () {
+  async function login (username) {
     setIsLoading(true)
-    const data = await fetchUserData("lucasnativo")
+    console.log(username)
 
-    setIsLoading(false)
-    console.log(data)
-    setIsLoggedIn(true)
+    const response = await fetchUserData(username)
+
+    setData(response)
   }
 
   return (
     <>
       <label>User:
-        <input disabled={isLoading}></input>
+        <input disabled={isLoading} value={username} onChange={(e) => setUsername(e.target.value)}></input>
       </label>
-      <button onClick={login} disabled={isLoading}>Enter</button>
+      <button onClick={() => login(username)} disabled={isLoading}>{isLoading ? "Carregando" : "Entrar"}</button>
     </>
   )
 }
