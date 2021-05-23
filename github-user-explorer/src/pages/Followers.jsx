@@ -44,7 +44,7 @@ function Followers() {
         title={
           selectedUser
             ? `#${selectedUser.login}`
-            : `${data.followers.length} Seguidores`
+            : `${data.followers.length} seguidores`
         }
         onBackClick={goBack}
         onSaveClick={selectedUser ? () => switchUser(selectedUser.login) : null}

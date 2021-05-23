@@ -39,7 +39,7 @@ function Following() {
   return (
     <>
       <TopBar
-        title={`${data.following.length} Seguindo`}
+        title={`${data.following.length} seguindo`}
         onBackClick={goBack}
         onSaveClick={selectedUser ? () => switchUser(selectedUser.login) : null}
       />

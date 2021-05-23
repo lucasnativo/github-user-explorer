@@ -1,10 +1,11 @@
 import { useContext } from "react";
-import { Redirect } from "react-router";
-
-import NavBar from "../components/NavBar";
-import ListItem from "../components/ListItem";
+import { Redirect, useHistory } from "react-router";
 
 import { DataContext } from "../context/DataContext";
+
+import TopBar from "../components/TopBar";
+import ListItem from "../components/ListItem";
+import NavBar from "../components/NavBar";
 
 // let a = {
 //   name: "adsd",
@@ -14,6 +15,7 @@ import { DataContext } from "../context/DataContext";
 
 function Repos() {
   const { data } = useContext(DataContext);
+  const history = useHistory();
 
   if (!data) {
     return <Redirect to="/"></Redirect>;
@@ -21,6 +23,10 @@ function Repos() {
 
   return (
     <>
+      <TopBar
+        title={`${data.repos.length} repositórios`}
+        onBackClick={() => history.push("/home")}
+      ></TopBar>
       <ReposList repos={data.repos} />
       <NavBar />
     </>
