@@ -1,8 +1,47 @@
 import { Redirect } from "react-router-dom";
 import { useContext, useState } from "react";
+
 import { DataContext } from "../context/DataContext";
 import fetchAllUserData from "../utils/fetchAllUserData";
-import "../App.css";
+
+import styled from "styled-components";
+
+const LoginStyle = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 812px;
+  width: 100%;
+`;
+
+const InputStyle = styled.input`
+  width: 90%;
+  border-radius: 0.6rem;
+  height: 3rem;
+  padding: 5%;
+  font-size: 1.3em;
+  margin-bottom: 3%;
+`;
+
+const ButtonStyle = styled.button`
+  width: 90%;
+  border-radius: 0.6rem;
+  height: 3rem;
+  background-color: #ffcf3c;
+  color: black;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1.3em;
+`;
+
+const ErrorStyle = styled.div`
+  color: red;
+  font-size: 0.8em;
+  width: 90%;
+  padding-left: 5%;
+  margin-bottom: 3%;
+`;
 
 function Login({ main }) {
   const { data, setData } = useContext(DataContext);
@@ -35,19 +74,33 @@ function Login({ main }) {
     }
   }
 
+  function onChangeUsername(e) {
+    if (username !== "") {
+      setError(null);
+    }
+    setUsername(e.target.value);
+  }
+
+  function handleEnter(e) {
+    if (e.key === "Enter") {
+      return login(username);
+    }
+  }
+
   return (
-    <>
-      <input
+    <LoginStyle>
+      <InputStyle
         placeholder="Usuário"
         disabled={isLoading}
         value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      ></input>
-      {error && <div>{error}</div>}
-      <button onClick={() => login(username)} disabled={isLoading}>
+        onChange={(e) => onChangeUsername(e)}
+        onKeyPress={handleEnter}
+      ></InputStyle>
+      {error && <ErrorStyle>{error}</ErrorStyle>}
+      <ButtonStyle onClick={() => login(username)} disabled={isLoading}>
         {isLoading ? "Carregando" : "Entrar"}
-      </button>
-    </>
+      </ButtonStyle>
+    </LoginStyle>
   );
 }
 

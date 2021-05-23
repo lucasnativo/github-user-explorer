@@ -1,12 +1,14 @@
-import NavBar from "../components/NavBar";
-import TopBar from "../components/TopBar";
-import ProfileList from "../components/ProfileList";
 import { useContext, useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
+
+import TopBar from "../components/TopBar";
+import ProfileList from "../components/ProfileList";
+import NavBar from "../components/NavBar";
+import Profile from "../components/Profile";
+
 import { DataContext } from "../context/DataContext";
 import fetchUserData from "../utils/fetchUserData";
 import fetchAllUserData from "../utils/fetchAllUserData";
-import Profile from "../components/Profile";
 
 function Followers() {
   const { data, setData } = useContext(DataContext);

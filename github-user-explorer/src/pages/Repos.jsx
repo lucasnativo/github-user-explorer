@@ -1,8 +1,10 @@
-import NavBar from "../components/NavBar";
 import { useContext } from "react";
 import { Redirect } from "react-router";
+
+import NavBar from "../components/NavBar";
+import ListItem from "../components/ListItem";
+
 import { DataContext } from "../context/DataContext";
-import userEvent from "@testing-library/user-event";
 
 // let a = {
 //   name: "adsd",
@@ -11,7 +13,7 @@ import userEvent from "@testing-library/user-event";
 // };
 
 function Repos() {
-  const { data, setData } = useContext(DataContext);
+  const { data } = useContext(DataContext);
 
   if (!data) {
     return <Redirect to="/"></Redirect>;
@@ -19,18 +21,22 @@ function Repos() {
 
   return (
     <>
-      <ul>
-        {data.repos.map((repo) => (
-          <Repo name={repo.name} key={repo.name} />
-        ))}
-      </ul>
+      <ReposList repos={data.repos} />
       <NavBar />
     </>
   );
 }
 
-function Repo({ name }) {
-  return <li>{name}</li>;
+function ReposList({ repos }) {
+  return (
+    <ul>
+      {repos.map((repo) => (
+        <ListItem name={repo.name} key={repo.name}>
+          {repo.name}
+        </ListItem>
+      ))}
+    </ul>
+  );
 }
 
 export default Repos;
