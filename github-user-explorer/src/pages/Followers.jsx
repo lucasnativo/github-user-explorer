@@ -41,7 +41,11 @@ function Followers() {
   return (
     <>
       <TopBar
-        title={`${data.followers.length} Seguidores`}
+        title={
+          selectedUser
+            ? `#${selectedUser.login}`
+            : `${data.followers.length} Seguidores`
+        }
         onBackClick={goBack}
         onSaveClick={selectedUser ? () => switchUser(selectedUser.login) : null}
       />
