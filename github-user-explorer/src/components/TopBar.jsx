@@ -7,6 +7,7 @@ const StyledTopBar = styled.div`
   position: relative;
   background-color: #1f1f1f;
   height: 5rem;
+  font-weight: bold;
   .back {
     position: absolute;
     left: 0;
