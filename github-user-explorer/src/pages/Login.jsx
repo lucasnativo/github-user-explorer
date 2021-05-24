@@ -1,5 +1,5 @@
 import { Redirect } from "react-router-dom"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 
 import { DataContext } from "../context/DataContext"
 import fetchAllUserData from "../utils/fetchAllUserData"
@@ -32,7 +32,8 @@ const ButtonStyle = styled.button`
   width: 90%;
   border-radius: 0.6rem;
   height: 3rem;
-  background-color: #ffcf3c;
+  background-color: ${(props) =>
+    props.isOffline ? "red" : props.isLoading ? "#ce9b3c7a" : "#ffcf3c"};
   color: black;
   text-transform: uppercase;
   font-weight: bold;
@@ -62,8 +63,19 @@ const StyledArrowRight = styled(ArrowRight)`
 function Login({ main }) {
   const { data, setData } = useContext(DataContext)
   const [isLoading, setIsLoading] = useState(false)
+  const [isOffline, setIsOffline] = useState(false)
   const [username, setUsername] = useState("")
   const [error, setError] = useState(null)
+
+  useEffect(() => {
+    window.addEventListener("online", setOnline)
+    return () => window.removeEventListener("online", setOnline)
+  }, [setIsOffline])
+
+  useEffect(() => {
+    window.addEventListener("offline", setOffline)
+    return () => window.removeEventListener("offline", setOffline)
+  }, [setIsOffline])
 
   if (data) {
     return <Redirect to="/home"></Redirect>
@@ -103,6 +115,14 @@ function Login({ main }) {
     }
   }
 
+  function setOffline() {
+    setIsOffline(true)
+  }
+
+  function setOnline() {
+    setIsOffline(false)
+  }
+
   return (
     <LoginStyle>
       <StyledGitHubLogo />
@@ -114,7 +134,12 @@ function Login({ main }) {
         onKeyPress={handleEnter}
       ></InputStyle>
       {error && <ErrorStyle>{error}</ErrorStyle>}
-      <ButtonStyle onClick={() => login(username)} disabled={isLoading}>
+      <ButtonStyle
+        isLoading={isLoading}
+        isOffline={isOffline}
+        onClick={() => login(username)}
+        disabled={isOffline || isLoading}
+      >
         {isLoading ? "Carregando" : "Entrar"}
         <StyledArrowRight />
       </ButtonStyle>

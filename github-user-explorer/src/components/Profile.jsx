@@ -83,12 +83,16 @@ function Profile({ user, enableNavigation }) {
       <StyledInfo>
         <StyledNameContainer>
           <Dot />
-          <StyledName>{user.name}</StyledName>
+          <StyledName>{user.name || user.login}</StyledName>
         </StyledNameContainer>
-        <StyledEmailLocation>
-          <div>{user.email}</div>
-          <div>{user.location}</div>
-        </StyledEmailLocation>
+        {(user.email || user.location) && (
+          <>
+            <StyledEmailLocation>
+              <div>{user.email}</div>
+              <div>{user.location}</div>
+            </StyledEmailLocation>
+          </>
+        )}
       </StyledInfo>
       <StyledCounters>
         <StyledCounter onClick={() => navigate("/followers")}>
@@ -104,11 +108,15 @@ function Profile({ user, enableNavigation }) {
           <div>Repos</div>
         </StyledCounter>
       </StyledCounters>
-      <StyledBio>
-        <Dot />
-        <StyledBioLabel>Bio</StyledBioLabel>
-      </StyledBio>
-      <StyledBioContent>{user.bio}</StyledBioContent>
+      {user.bio && (
+        <>
+          <StyledBio>
+            <Dot />
+            <StyledBioLabel>Bio</StyledBioLabel>
+          </StyledBio>
+          <StyledBioContent>{user.bio}</StyledBioContent>
+        </>
+      )}
     </div>
   )
 }

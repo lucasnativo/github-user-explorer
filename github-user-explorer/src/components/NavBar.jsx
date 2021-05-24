@@ -14,6 +14,7 @@ const NavBarStyled = styled.nav`
   border-top-left-radius: 0.6em;
   border-top-right-radius: 0.6em;
   display: flex;
+  margin-bottom: -2px;
 
   .selected {
     color: black;
