@@ -1,8 +1,12 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
-const Avatar = styled.img`
-  width: 64px;
+const StyledAvatar = styled.img`
   border-radius: 50%;
-`;
+  border: 4px solid white;
+`
 
-export default Avatar;
+function Avatar({ src, alt, className }) {
+  return <StyledAvatar className={className} src={src} alt={alt} />
+}
+
+export default Avatar
