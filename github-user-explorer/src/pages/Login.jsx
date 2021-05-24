@@ -5,8 +5,8 @@ import { DataContext } from "../context/DataContext"
 import fetchAllUserData from "../utils/fetchAllUserData"
 
 import styled from "styled-components"
-import GitHubLogo from "../components/GitHubLogo"
-import ArrowRight from "../components/ArrowRight"
+import GitHubLogo from "../components/icons/GitHubLogo"
+import ArrowRight from "../components/icons/ArrowRight"
 
 const LoginStyle = styled.div`
   display: flex;
@@ -49,10 +49,11 @@ const ErrorStyle = styled.div`
 
 const StyledGitHubLogo = styled(GitHubLogo)`
   color: #ffcf3c;
-  width: 100px;
+  width: 100px !important;
   margin-top: 200px;
   margin-bottom: 45px;
 `
+
 const StyledArrowRight = styled(ArrowRight)`
   margin-left: 8px;
   width: 13px;

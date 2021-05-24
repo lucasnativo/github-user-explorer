@@ -8,8 +8,9 @@ import { useHistory } from "react-router-dom"
 const StyledAvatarContainer = styled.div`
   display: flex;
   justify-content: center;
-  padding-top: 16px;
+  padding-top: 24px;
   padding-bottom: 16px;
+  margin-bottom: 50px;
   background: linear-gradient(
     to bottom,
     #1f1f1f 0%,
@@ -32,7 +33,7 @@ const StyledBioContent = styled.p`
   margin: 0 25px;
 `
 const StyledAvatar = styled(Avatar)`
-  width: 100px;
+  width: 120px;
 `
 const StyledInfo = styled.div`
   margin-bottom: 30px;

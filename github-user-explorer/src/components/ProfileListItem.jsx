@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import Avatar from "./Avatar"
 import Dot from "./Dot"
-import ArrowRight from "./ArrowRight"
+import ArrowRight from "./icons/ArrowRight"
 
 const StyledListItem = styled.div`
   display: flex;

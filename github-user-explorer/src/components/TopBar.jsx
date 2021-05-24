@@ -1,39 +1,50 @@
-import styled from "styled-components";
+import styled from "styled-components"
+import ArrowLeft from "./icons/ArrowLeft"
+import SignIn from "./icons/SignIn"
 
 const StyledTopBar = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
-  position: relative;
   background-color: #1f1f1f;
+  padding-left: 12px;
   height: 5rem;
+  position: relative;
+`
+
+const StyledTitle = styled.p`
+  display: flex;
+  justify-content: center;
   font-weight: bold;
-  .back {
-    position: absolute;
-    left: 0;
-    margin-left: 1em;
+  flex: 1;
+`
+
+const StyledSignInContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  position: absolute;
+  right: 0;
+  svg {
+    margin-left: 10px;
   }
-  .save {
-    position: absolute;
-    right: 0;
-    margin-right: 1em;
-  }
-`;
+`
+const StyledArrowLeft = styled(ArrowLeft)`
+  position: absolute;
+`
 
 function TopBar({ title, onBackClick, onSaveClick }) {
   return (
     <StyledTopBar>
-      <button onClick={onBackClick} className="back">
-        Voltar
-      </button>
-      <p>{title}</p>
+      <StyledArrowLeft onClick={onBackClick} />
+      <StyledTitle>{title}</StyledTitle>
       {onSaveClick && (
-        <button onClick={onSaveClick} className="save">
+        <StyledSignInContainer>
           Salvar
-        </button>
+          <SignIn onClick={onSaveClick} />
+        </StyledSignInContainer>
       )}
     </StyledTopBar>
-  );
+  )
 }
 
-export default TopBar;
+export default TopBar

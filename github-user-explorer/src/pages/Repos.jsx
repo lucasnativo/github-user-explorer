@@ -1,22 +1,16 @@
 import { useContext } from "react"
 import { Redirect, useHistory } from "react-router"
-
-import { DataContext } from "../context/DataContext"
-
-import TopBar from "../components/TopBar"
-import NavBar from "../components/NavBar"
-import Star from "../components/Star"
-import Dot from "../components/Dot"
-
 import styled from "styled-components"
 
-// let a = {
-//   name: "adsd",
-//   description: null,
-//   stargazers_count: 0,
-// };
+import { DataContext } from "../context/DataContext"
+import TopBar from "../components/TopBar"
+import NavBar from "../components/NavBar"
+import Star from "../components/icons/Star"
+import Dot from "../components/Dot"
 
-const StyledRepoList = styled.div``
+const StyledRepoList = styled.div`
+  margin-bottom: 90px;
+`
 const StyledCounterStar = styled.div`
   display: flex;
   align-items: center;

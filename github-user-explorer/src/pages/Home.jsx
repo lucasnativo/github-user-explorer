@@ -1,28 +1,33 @@
 import { useContext } from "react"
 import { Redirect } from "react-router"
-
-import { DataContext } from "../context/DataContext"
-
-import NavBar from "../components/NavBar"
-import Profile from "../components/Profile"
-
 import styled from "styled-components"
 
-const HomeStyle = styled.div`
-  border: 0;
-  height: 812px;
-  width: 100%;
-  .topbar {
-    display: flex;
-    background-color: #1f1f1f;
-    justify-content: space-between;
-    height: 6em;
+import { DataContext } from "../context/DataContext"
+import NavBar from "../components/NavBar"
+import Profile from "../components/Profile"
+import SignOut from "../components/icons/SignOut"
+
+const HomeStyle = styled.div``
+
+const StyledTopBarProfile = styled.div`
+  display: flex;
+  background-color: #1f1f1f;
+  justify-content: space-between;
+  height: 50px;
+  padding-top: 10px;
+`
+const StyledSignOutContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 30px;
+
+  svg {
+    margin-left: 10px;
   }
-  .img {
-    width: 100px;
-    border-radius: 50%;
-    border: 4px solid white;
-  }
+`
+const StyledLogin = styled.p`
+  margin-left: 20px;
+  font-weight: bold;
 `
 
 function Home() {
@@ -34,10 +39,13 @@ function Home() {
 
   return (
     <HomeStyle>
-      <div className="topbar">
-        <p>{`#${data.user.login}`}</p>
-        <button onClick={() => setData(null)}>Sair</button>
-      </div>
+      <StyledTopBarProfile>
+        <StyledLogin>{`#${data.user.login}`}</StyledLogin>
+        <StyledSignOutContainer>
+          Sair
+          <SignOut onClick={() => setData(null)} />
+        </StyledSignOutContainer>
+      </StyledTopBarProfile>
       <Profile user={data.user} enableNavigation />
       <NavBar />
     </HomeStyle>
